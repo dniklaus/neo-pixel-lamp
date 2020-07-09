@@ -53,10 +53,9 @@ private:  // forbidden default methods
 
 //-----------------------------------------------------------------------------
 
-class Timer;
+class SpinTimer;
 class DbgCli_Topic;
 class DbgCli_Command;
-
 
 /**
  * Indicator object.
@@ -98,7 +97,7 @@ public:
 
 private:
   AIndicatorAdapter*  m_adapter;
-  Timer*              m_blinkTimer;
+  SpinTimer*          m_blinkTimer;
   static const unsigned long c_blinkTimeMillis;
   DbgCli_Topic*       m_dbgCliTopic;
   DbgCli_Command*     m_cliCmd;

@@ -6,9 +6,9 @@
  */
 
 #include <Arduino.h>
-#include <Timer.h>
 #include <DbgCliTopic.h>
 #include <DbgCliCommand.h>
+#include <SpinTimer.h>
 #include "Indicator.h"
 #include "DbgCliCmdIndSet.h"
 
@@ -25,7 +25,7 @@ void AIndicatorAdapter::attachIndicator(Indicator* indicator)
 
 //-----------------------------------------------------------------------------
 
-class BlinkTimerAdapter : public TimerAdapter
+class BlinkTimerAdapter : public SpinTimerAdapter
 {
 private:
   Indicator* m_indicator;
@@ -50,7 +50,7 @@ const unsigned long Indicator::c_blinkTimeMillis = 500;
 
 Indicator::Indicator(const char* name, const char* description)
 : m_adapter(0)
-, m_blinkTimer(new Timer(new BlinkTimerAdapter(this), Timer::IS_RECURRING, c_blinkTimeMillis))
+, m_blinkTimer(new SpinTimer(new BlinkTimerAdapter(this), SpinTimer::IS_RECURRING, c_blinkTimeMillis))
 , m_dbgCliTopic(new DbgCli_Topic(DbgCli_Node::RootNode(), name, description))
 , m_cliCmd(new DbgCliCmd_IndSet(*this))
 , m_indicatorBit(false)
