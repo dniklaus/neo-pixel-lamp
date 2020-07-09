@@ -17,16 +17,11 @@
 // local components (lib folder)
 #include <Indicator.h>
 #include <MyBuiltinLedIndicatorAdapter.h>
-#include <Button.h>
-#include <DetectorStrategy.h>
-#include <ButtonEdgeDetector.h>
-#include <MyButtonAdapter.h>
-#include <ArduinoDigitalInPinSupervisor.h>
 
 SerialCommand* sCmd = 0;
 
 // indicator implementation for built in LED
-Indicator* led  = 0;
+Indicator* led = 0;
 
 void setup()
 {
@@ -36,10 +31,6 @@ void setup()
   // indicator LED
   led = new Indicator("led", "Built in LED.");
   led->assignAdapter(new MyBuiltinLedIndicatorAdapter());
-
-#ifdef USER_BTN
-  new Button(new ArduinoDigitalInPinSupervisor(USER_BTN), new ButtonEdgeDetector(), new MyButtonAdapter(led));
-#endif
 }
 
 void loop()
