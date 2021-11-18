@@ -25,10 +25,6 @@ SerialCommand* sCmd = 0;
 // indicator implementation for built in LED
 Indicator* led = 0;
 
-// 
-const unsigned int cAnalogPin = A0;  // potentiometer wiper (middle terminal) connected to analog pin 0
-                            // outside leads to ground and +5V
-
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
 // Parameter 3 = pixel type flags, add together as needed:
@@ -40,15 +36,6 @@ const unsigned int cAnalogPin = A0;  // potentiometer wiper (middle terminal) co
 const unsigned int cNeoPixelPin = 6;
 const unsigned int cNeoPixelNum = 16;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(cNeoPixelNum, cNeoPixelPin, NEO_GRB + NEO_KHZ800);
-
-// Read Neo Pixel Color value from ADC
-uint32_t readColorPreset()
-{
-  uint32_t val = analogRead(cAnalogPin);  // read the input pin
-  val = val * 255;
-  val = val / 1023;
-  return val;
-}
 
 // Fill the dots with one color
 void fillOneColor(uint32_t c)
@@ -68,17 +55,21 @@ void setup()
   led = new Indicator("led", "Built in LED.");
   led->assignAdapter(new MyBuiltinLedIndicatorAdapter());
 
+  // Neo Pixels
   strip.begin();
-  strip.setBrightness(255);
-  strip.show(); // Initialize all pixels to 'off'
+
+  // Initialize all pixels to 'off'
+  strip.setBrightness(0);
+  strip.show(); 
+
+  // set the color
   fillOneColor(strip.Color(255, 255, 255));
+  strip.setBrightness(255);
+  strip.show();
 }
 
 void loop()
 {
-  strip.setBrightness(readColorPreset());
-  strip.show();
-
   if (0 != sCmd)
   {
     sCmd->readSerial();     // process serial commands
