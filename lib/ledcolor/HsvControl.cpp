@@ -25,7 +25,9 @@ public:
 
 //-----------------------------------------------------------------------------
 
-HsvControl::HsvControl(unsigned int neoPixelNum, unsigned int neoPixelPin)
+const unsigned char HsvControl::c_defaultBrightness = 200;
+
+HsvControl::HsvControl(unsigned int neoPixelNum, unsigned int neoPixelPin, unsigned char brightness /* = c_defaultBrightness*/)
 : m_hue(0)
 , m_isHueRunning(true)
 , m_saturation(255)
@@ -34,7 +36,7 @@ HsvControl::HsvControl(unsigned int neoPixelNum, unsigned int neoPixelPin)
 , m_strip(new Adafruit_NeoPixel(neoPixelNum, neoPixelPin, NEO_GRB + NEO_KHZ800))
 { 
   m_strip->begin();
-  m_strip->setBrightness(200);
+  m_strip->setBrightness(brightness);
   m_strip->clear();
   m_strip->show();
 }
@@ -70,4 +72,9 @@ void HsvControl::setHue(unsigned short hue)
 {
   m_isHueRunning = false;
   m_hue = hue;
+}
+
+void HsvControl::setSaturation(unsigned char saturation)
+{
+  m_saturation = saturation;
 }
