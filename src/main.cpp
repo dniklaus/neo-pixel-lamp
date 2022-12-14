@@ -42,10 +42,12 @@ void setup()
   const unsigned int cNeoPixelNum1 = 96;
   const unsigned int cNeoPixelPin1 = 7;
   hsvControl1 = new HsvControl(cNeoPixelNum1, cNeoPixelPin1);
+  hsvControl1->setSaturation(150);
 
   const unsigned int cNeoPixelNum2 = 100;
   const unsigned int cNeoPixelPin2 = 6;
-  hsvControl2 = new HsvControl(cNeoPixelNum2, cNeoPixelPin2);
+  const unsigned char cNeoPixel2Brightness = 255;
+  hsvControl2 = new HsvControl(cNeoPixelNum2, cNeoPixelPin2, cNeoPixel2Brightness);
   hsvControl2->setHue(7000);
 }
 
